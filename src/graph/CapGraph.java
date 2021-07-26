@@ -6,6 +6,10 @@ package graph;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import sun.security.provider.certpath.AdjacencyList;
 
 /**
  * @author Your name here.
@@ -19,10 +23,26 @@ public class CapGraph implements Graph {
 	/* (non-Javadoc)
 	 * @see graph.Graph#addVertex(int)
 	 */
+	
+	//class members
+	private HashMap<Integer, HashSet<Integer>> adjListMap; //directed graph
+	
+	
+	//xtors
+	public CapGraph() {
+		adjListMap = new HashMap<Integer, HashSet<Integer>>();
+	}
+	
+	public int getVerticesSize() {
+		return adjListMap.size();
+	}
+	
 	@Override
 	public void addVertex(int num) {
 		// TODO Auto-generated method stub
-
+		if (adjListMap.containsKey(num)) return;
+		HashSet<Integer> neighbor = new HashSet<Integer>();
+		adjListMap.put(num, neighbor);
 	}
 
 	/* (non-Javadoc)
@@ -31,7 +51,11 @@ public class CapGraph implements Graph {
 	@Override
 	public void addEdge(int from, int to) {
 		// TODO Auto-generated method stub
-
+		if (adjListMap.containsKey(from) && adjListMap.containsKey(to)) {
+			adjListMap.get(from).add(to);
+		} else {
+			System.out.println("invalid argument in addEdge() in CapGraph Class");
+		}
 	}
 
 	/* (non-Javadoc)
@@ -40,7 +64,13 @@ public class CapGraph implements Graph {
 	@Override
 	public Graph getEgonet(int center) {
 		// TODO Auto-generated method stub
-		return null;
+		Graph result = new CapGraph();
+		result.addVertex(center);
+		for (Integer neighbor : this.adjListMap.get(center)) {
+			result.addEdge(center, neighbor);
+		}
+		
+		return result;
 	}
 
 	/* (non-Javadoc)
@@ -58,7 +88,7 @@ public class CapGraph implements Graph {
 	@Override
 	public HashMap<Integer, HashSet<Integer>> exportGraph() {
 		// TODO Auto-generated method stub
-		return null;
+		return adjListMap;
 	}
 
 }
