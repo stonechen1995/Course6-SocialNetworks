@@ -28,7 +28,7 @@ public class EgoGrader extends Grader {
         thread.start();
 
         // Safeguard against infinite loops
-        long endTime = System.currentTimeMillis() + 30000*2;
+        long endTime = System.currentTimeMillis() + 30000;
         boolean infinite = false;
         while (thread.isAlive()) {
             if (System.currentTimeMillis() > endTime) {
@@ -43,7 +43,7 @@ public class EgoGrader extends Grader {
         	grader.feedback = "All tests passed. Congrats!\n" + grader.feedback;
         }
         if (infinite) {
-            grader.feedback += "Your program entered an infinite loop or took longer than 900 seconds to finish.";
+            grader.feedback += "Your program entered an infinite loop or took longer than 30 seconds to finish.";
         }
         System.out.println(makeOutput((double)grader.correct / TESTS, grader.feedback));
     }

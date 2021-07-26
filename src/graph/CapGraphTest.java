@@ -34,11 +34,11 @@ public class CapGraphTest {
 //		fail("Not yet implemented");
 //	}
 //
-	@Test
-	public void testGetEgonet() {
-		Graph egonetGraph = myGraph.getEgonet(0);
-		((CapGraph)egonetGraph).printMap();;
-	}
+//	@Test
+//	public void testGetEgonet() {
+//		Graph egonetGraph = myGraph.getEgonet(0);
+//		((CapGraph)egonetGraph).printMap();;
+//	}
 //
 //	@Test
 //	public void testGetSCCs() {
@@ -49,10 +49,18 @@ public class CapGraphTest {
 //	public void testExportGraph() {
 //		fail("Not yet implemented");
 //	}
-	
+//	
 //	@Test
 //	public void testPrintMap() {
 //		myGraph.printMap();
 //	}
 
+	@Test
+	public void testGetSCCs() {
+		for (Graph gra: myGraph.getSCCs()) {
+			System.out.println("going to print out gra");
+			gra.printMap();
+			System.out.println("gra printed out");
+		}
+	}
 }
