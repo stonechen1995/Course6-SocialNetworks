@@ -3,11 +3,13 @@
  */
 package graph;
 
+import java.awt.print.Printable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 
 import sun.security.provider.certpath.AdjacencyList;
 
@@ -26,7 +28,7 @@ public class CapGraph implements Graph {
 	
 	//class members
 	private HashMap<Integer, HashSet<Integer>> adjListMap; //directed graph
-	
+	public int count = 0;
 	
 	//xtors
 	public CapGraph() {
@@ -41,8 +43,7 @@ public class CapGraph implements Graph {
 	public void addVertex(int num) {
 		// TODO Auto-generated method stub
 		if (adjListMap.containsKey(num)) return;
-		HashSet<Integer> neighbor = new HashSet<Integer>();
-		adjListMap.put(num, neighbor);
+		adjListMap.put(num, new HashSet<Integer>());
 	}
 
 	/* (non-Javadoc)
@@ -51,10 +52,15 @@ public class CapGraph implements Graph {
 	@Override
 	public void addEdge(int from, int to) {
 		// TODO Auto-generated method stub
-		if (adjListMap.containsKey(from) && adjListMap.containsKey(to)) {
+		if (!adjListMap.containsKey(from)) {
+			System.out.println("invalid argument from: \"" + from + "\" not found in map");
+		}
+		if (!adjListMap.containsKey(to)) {
+			System.out.println("invalid argument to: \"" + to + "\" not found in map");
+			count++;
+		} 
+		if (adjListMap.containsKey(from) && adjListMap.containsKey(to)){
 			adjListMap.get(from).add(to);
-		} else {
-			System.out.println("invalid argument in addEdge() in CapGraph Class");
 		}
 	}
 
@@ -88,7 +94,19 @@ public class CapGraph implements Graph {
 	@Override
 	public HashMap<Integer, HashSet<Integer>> exportGraph() {
 		// TODO Auto-generated method stub
-		return adjListMap;
+		return new HashMap<Integer, HashSet<Integer>>(adjListMap);
+	}
+	
+	public void printMap() {
+		String str = ""; 
+		for (int from : adjListMap.keySet()) {
+			str += "From " + from + "\n";
+			for (int to : adjListMap.get(from)) {
+				str += "--->To " + to + "\n";
+			}
+		}
+		System.out.println(str);
+		System.out.println("count: " + count);
 	}
 
 }

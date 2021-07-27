@@ -10,22 +10,11 @@ import sun.tools.jar.resources.jar;
 
 public class CapGraphTest {
 
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-		CapGraph gra = new CapGraph();
-		for (int i = 0; i < 5; i++) {
-			gra.addVertex(i);
-		}
-		for(int i = 0; i < 5; i ++) {
-			for (int j = 0; j < 5; j++) {
-				gra.addEdge(i, j);
-			}
-		}
-	}
+	CapGraph gra = new CapGraph();
 
 	@Before
 	public void setUp() throws Exception {
-		Graph gra = new CapGraph();
+		gra = new CapGraph();
 		for (int i = 0; i < 5; i++) {
 			gra.addVertex(i);
 		}
@@ -38,17 +27,7 @@ public class CapGraphTest {
 
 	@Test
 	public void testAddVertex() {
-		CapGraph gra = new CapGraph();
-		for (int i = 0; i < 5; i++) {
-			gra.addVertex(i);
-		}
-		for(int i = 0; i < 5; i ++) {
-			for (int j = 0; j < 5; j++) {
-				gra.addEdge(i, j);
-			}
-		}
 		assertEquals(5, gra.getVerticesSize());
-		fail("Not yet implemented");
 	}
 
 //	@Test
@@ -70,5 +49,10 @@ public class CapGraphTest {
 //	public void testExportGraph() {
 //		fail("Not yet implemented");
 //	}
+	
+	@Test
+	public void testPrintMap() {
+		gra.printMap();
+	}
 
 }
