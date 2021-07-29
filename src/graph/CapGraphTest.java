@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import sun.tools.jar.resources.jar;
 
 public class CapGraphTest {
 
