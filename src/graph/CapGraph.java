@@ -27,7 +27,8 @@ public class CapGraph implements Graph {
 	
 	//class members
 	private HashMap<Integer, HashSet<Integer>> adjListMap; //directed graph
-	public int count = 0;
+	private int count_invalidToArgument = 0;
+	private int count_invalidFromArgument = 0;
 	
 	//xtors
 	public CapGraph() {
@@ -52,11 +53,12 @@ public class CapGraph implements Graph {
 	public void addEdge(int from, int to) {
 		// TODO Auto-generated method stub
 		if (!adjListMap.containsKey(from)) {
+			count_invalidFromArgument++;
 			System.out.println("invalid argument from: \"" + from + "\" not found in map");
 		}
 		if (!adjListMap.containsKey(to)) {
+			count_invalidToArgument++;
 			System.out.println("invalid argument to: \"" + to + "\" not found in map");
-			count++;
 		} 
 		if (adjListMap.containsKey(from) && adjListMap.containsKey(to)){
 			adjListMap.get(from).add(to);
@@ -100,12 +102,13 @@ public class CapGraph implements Graph {
 		String str = ""; 
 		for (int from : adjListMap.keySet()) {
 			str += "From " + from + "\n";
-			for (int to : adjListMap.get(from)) {
-				str += "--->To " + to + "\n";
-			}
+//			for (int to : adjListMap.get(from)) {
+//				str += "--->To " + to + "\n";
+//			}
 		}
 		System.out.println(str);
-		System.out.println("count: " + count);
+		System.out.println("count_invalidFromArgument: " + count_invalidFromArgument);
+		System.out.println("count_invalidToArgument: " + count_invalidToArgument);
 	}
 
 }

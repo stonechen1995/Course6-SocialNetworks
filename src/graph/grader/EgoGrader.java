@@ -27,7 +27,7 @@ public class EgoGrader extends Grader {
         thread.start();
 
         // Safeguard against infinite loops
-        long endTime = System.currentTimeMillis() + 30000;
+        long endTime = System.currentTimeMillis() + 30000*2;
         boolean infinite = false;
         while (thread.isAlive()) {
             if (System.currentTimeMillis() > endTime) {
@@ -42,7 +42,7 @@ public class EgoGrader extends Grader {
         	grader.feedback = "All tests passed. Congrats!\n" + grader.feedback;
         }
         if (infinite) {
-            grader.feedback += "Your program entered an infinite loop or took longer than 30 seconds to finish.";
+            grader.feedback += "Your program entered an infinite loop or took longer than 900 seconds to finish.";
         }
         System.out.println(makeOutput((double)grader.correct / TESTS, grader.feedback));
     }
@@ -52,7 +52,7 @@ public class EgoGrader extends Grader {
         try {
             Graph graph = new CapGraph();
             GraphLoader.loadGraph(graph, "data/facebook_ucsd.txt");
-            //((CapGraph) graph).printMap();
+            ((CapGraph) graph).printMap(); //for debugging
             feedback += "\nGRAPH: facebook_ucsd.txt";
             for (int i = 0; i < 10; i++) {
                 feedback += appendFeedback(i + 1, "Starting from node " + i);
@@ -61,7 +61,7 @@ public class EgoGrader extends Grader {
                 BufferedReader br = new BufferedReader(new FileReader("data/ego_answers/ego_" + i + ".txt"));
                 String next;
                 boolean failed = false;
-                // Scan though the file
+                // Scan through the file
                 while ((next = br.readLine()) != null) {
                     // Punctuation is for readability and doesn't help us
                     next = next.replaceAll("[:,]", " ");
