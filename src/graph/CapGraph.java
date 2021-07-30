@@ -73,7 +73,8 @@ public class CapGraph implements Graph {
 		// TODO Auto-generated method stub
 		Graph result = new CapGraph();
 		result.addVertex(center);
-		for (Integer neighbor : this.adjListMap.get(center)) {
+		for (int neighbor : this.adjListMap.get(center)) {
+			result.addVertex(neighbor);
 			result.addEdge(center, neighbor);
 		}
 		
@@ -101,14 +102,24 @@ public class CapGraph implements Graph {
 	public void printMap() {
 		String str = ""; 
 		for (int from : adjListMap.keySet()) {
+			System.out.println("From \"" + from + "\" to " + adjListMap.get(from).size() + " destinations");
 			str += "From " + from + "\n";
-//			for (int to : adjListMap.get(from)) {
-//				str += "--->To " + to + "\n";
-//			}
+			for (int to : adjListMap.get(from)) {
+				str += "--->To " + to + "\n";
+			}
 		}
 		System.out.println(str);
 		System.out.println("count_invalidFromArgument: " + count_invalidFromArgument);
 		System.out.println("count_invalidToArgument: " + count_invalidToArgument);
+	}
+	
+	public void printEgoNode(int center) {
+		System.out.println("From " + center + ", there are " + adjListMap.get(center).size() + " destinations.");
+		String str = "Destionation of " + center + ": ";
+		for (int i : adjListMap.get(center)) {
+			str += i + ", ";
+		}
+		System.out.println(str);
 	}
 
 }
