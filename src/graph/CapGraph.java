@@ -21,24 +21,29 @@ import java.util.concurrent.CountDownLatch;
  */
 public class CapGraph implements Graph {
 
-	/* (non-Javadoc)
-	 * @see graph.Graph#addVertex(int)
-	 */
-	
 	//class members
 	private HashMap<Integer, HashSet<Integer>> adjListMap; //directed graph
-	private int count_invalidToArgument = 0;
-	private int count_invalidFromArgument = 0;
 	
 	//xtors
 	public CapGraph() {
 		adjListMap = new HashMap<Integer, HashSet<Integer>>();
 	}
 	
+	public CapGraph(HashMap<Integer, HashSet<Integer>> map) {
+		adjListMap = new HashMap<Integer, HashSet<Integer>>(map);
+	}
+	
 	public int getVerticesSize() {
 		return adjListMap.size();
 	}
 	
+	private Set getAllVertices() {
+		return adjListMap.keySet();
+	}
+	
+	/* (non-Javadoc)
+	 * @see graph.Graph#addVertex(int)
+	 */
 	@Override
 	public void addVertex(int num) {
 		// TODO Auto-generated method stub
@@ -53,11 +58,9 @@ public class CapGraph implements Graph {
 	public void addEdge(int from, int to) {
 		// TODO Auto-generated method stub
 		if (!adjListMap.containsKey(from)) {
-			count_invalidFromArgument++;
 			System.out.println("invalid argument from: \"" + from + "\" not found in map");
 		}
 		if (!adjListMap.containsKey(to)) {
-			count_invalidToArgument++;
 			System.out.println("invalid argument to: \"" + to + "\" not found in map");
 		} 
 		if (adjListMap.containsKey(from) && adjListMap.containsKey(to)){
@@ -77,10 +80,18 @@ public class CapGraph implements Graph {
 			result.addVertex(neighbor);
 			result.addEdge(center, neighbor);
 		}
-		
+		Set<Integer> verticesOfResult = ((CapGraph)result).getAllVertices();
+		for (int i : verticesOfResult) {
+			for (int j : verticesOfResult) {
+				if (adjListMap.get(i).contains(j)) 
+					result.addEdge(i, j);
+				if (adjListMap.get(j).contains(i)) 
+					result.addEdge(j, i);
+			}
+		}
 		return result;
 	}
-
+	
 	/* (non-Javadoc)
 	 * @see graph.Graph#getSCCs()
 	 */
@@ -102,15 +113,13 @@ public class CapGraph implements Graph {
 	public void printMap() {
 		String str = ""; 
 		for (int from : adjListMap.keySet()) {
-			System.out.println("From \"" + from + "\" to " + adjListMap.get(from).size() + " destinations");
+			System.out.println("From \"" + from + "\", there are " + adjListMap.get(from).size() + " destinations");
 			str += "From " + from + "\n";
 			for (int to : adjListMap.get(from)) {
 				str += "--->To " + to + "\n";
 			}
 		}
 		System.out.println(str);
-		System.out.println("count_invalidFromArgument: " + count_invalidFromArgument);
-		System.out.println("count_invalidToArgument: " + count_invalidToArgument);
 	}
 	
 	public void printEgoNode(int center) {

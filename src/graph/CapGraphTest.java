@@ -9,24 +9,24 @@ import org.junit.Test;
 
 public class CapGraphTest {
 
-	CapGraph gra = new CapGraph();
+	CapGraph myGraph = new CapGraph();
 
 	@Before
 	public void setUp() throws Exception {
-		gra = new CapGraph();
+		myGraph = new CapGraph();
 		for (int i = 0; i < 5; i++) {
-			gra.addVertex(i);
+			myGraph.addVertex(i);
 		}
 		for(int i = 0; i < 5; i ++) {
 			for (int j = 0; j < 5; j++) {
-				gra.addEdge(i, j);
+				myGraph.addEdge(i, j);
 			}
 		}
 	}
 
 	@Test
 	public void testAddVertex() {
-		assertEquals(5, gra.getVerticesSize());
+		assertEquals(5, myGraph.getVerticesSize());
 	}
 
 //	@Test
@@ -34,10 +34,11 @@ public class CapGraphTest {
 //		fail("Not yet implemented");
 //	}
 //
-//	@Test
-//	public void testGetEgonet() {
-//		fail("Not yet implemented");
-//	}
+	@Test
+	public void testGetEgonet() {
+		Graph egonetGraph = myGraph.getEgonet(0);
+		((CapGraph)egonetGraph).printMap();;
+	}
 //
 //	@Test
 //	public void testGetSCCs() {
@@ -49,9 +50,9 @@ public class CapGraphTest {
 //		fail("Not yet implemented");
 //	}
 	
-	@Test
-	public void testPrintMap() {
-		gra.printMap();
-	}
+//	@Test
+//	public void testPrintMap() {
+//		myGraph.printMap();
+//	}
 
 }
